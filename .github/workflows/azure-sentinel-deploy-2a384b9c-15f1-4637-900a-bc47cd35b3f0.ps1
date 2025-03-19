@@ -143,11 +143,11 @@ function PushCsvToRepo() {
         git push -u origin $newResourceBranch
         New-Item -ItemType "directory" -Path ".sentinel"
     } else {
-        git fetch > $null
+        git fetch &gt; $null
         git checkout $newResourceBranch
     }
     
-    Write-Output $content > $relativeCsvPath
+    Write-Output $content &gt; $relativeCsvPath
     git add $relativeCsvPath
     git commit -m "Modified tracking table"
     git push -u origin $newResourceBranch
@@ -280,11 +280,9 @@ function GetMetadataCustomVersion($templateType, $paramFileType, $containsWorksp
     if($containsWorkspaceParam){
         $customVersion += "-WorkspaceParam"
     }
-
     if($smartDeployment){
         $customVersion += "-SmartTracking"
     }
-
     return $customVersion
 }
 
@@ -377,7 +375,7 @@ function AttemptDeployment($path, $parameterFile, $deploymentName, $templateObje
         {
             Write-Host "[Info] Deploy $path with parameter file: [$parameterFile]"
             $containsWorkspaceParam = false
-            $paramFileType = if(!$parameterFile) {"NoParam"} else if($parameterFile -like "*.bicepparam") {"BicepParam"} else {"JsonParam"}
+            $paramFileType = if(!$parameterFile) {"NoParam"} elseif($parameterFile -like "*.bicepparam") {"BicepParam"} else {"JsonParam"}
             if (DoesContainWorkspaceParam $templateObject) 
             {
                 if ($parameterFile) {
@@ -636,7 +634,7 @@ function TryGetCsvFile {
     $resourceBranchExists = git ls-remote --heads "https://github.com/$githubRepository" $newResourceBranch | wc -l 
     
     if ($resourceBranchExists -eq 1) {
-        git fetch > $null
+        git fetch &gt; $null
         git checkout $newResourceBranch
         
         if (Test-Path $relativeCsvPath) {
@@ -672,5 +670,3 @@ function main() {
     $fullDeploymentFlag = $modifiedConfig -or ($smartDeployment -eq "false")
     Deployment $fullDeploymentFlag $remoteShaTable $tree
 }
-
-main
