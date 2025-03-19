@@ -4,7 +4,7 @@ resource workspace_Microsoft_SecurityInsights_85f2eac9_43f1_480e_b8ad_473375c195
   name: '${workspace}/Microsoft.SecurityInsights/b2487996-3cc3-42d7-b482-2521449f66fb'
   kind: 'Scheduled'
   properties: {
-    displayName: 'Incidents Automation Rule Bicep'
+    displayName: 'Incidents Automation Rule'
     order: 1
     triggeringLogic: {
       isEnabled: true
